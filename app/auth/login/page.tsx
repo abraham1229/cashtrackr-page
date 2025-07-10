@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'CashTrackr - Login'
 }
 
-export default function RegisterPage() {
+export default function LoginPage() {
 
   return (
     <>
