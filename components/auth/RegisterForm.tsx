@@ -1,10 +1,13 @@
 'use client'
 
+import { register } from "@/actions/create-account-action"
+
 export default function RegisterForm() {
   return (
     <form
       className="mt-14 space-y-5"
       noValidate
+      action={register}
     >
       <div className="flex flex-col gap-2">
         <label
@@ -47,7 +50,7 @@ export default function RegisterForm() {
       <div className="flex flex-col gap-2">
         <label
           className="font-bold text-2xl"
-        >Repetir Password</label>
+        >Repeat Password</label>
         <input
           id="password_confirmation"
           type="password"
@@ -59,7 +62,7 @@ export default function RegisterForm() {
 
       <input
         type="submit"
-        value='Registrarme'
+        value='Register'
         className="bg-purple-950 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-black  text-xl cursor-pointer block"
       />
     </form>
