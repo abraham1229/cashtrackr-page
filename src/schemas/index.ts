@@ -14,12 +14,6 @@ export const RegisterSchema = z.object({
   path: ['password_confirmation']
 })
 
-export const SucessSchema = z.string()
-
-export const ErrorResponseSchema = z.object({
-  error: z.string()
-})
-
 export const TokenSchema = z.string({ message: 'Invalid token' })
   .length(6, { message: 'Invalid token' })
 
@@ -29,4 +23,16 @@ export const LoginSchema = z.object({
     .email({ message: 'Invalid email' }),
   password: z.string()
     .min(1, { message: 'Password is required' })
+})
+
+export const SucessSchema = z.string()
+
+export const ErrorResponseSchema = z.object({
+  error: z.string()
+})
+
+export const UserSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  email: z.string().email()
 })
