@@ -68,7 +68,7 @@ export default function RegisterForm() {
       <div className="flex flex-col gap-2">
         <label
           className="font-bold text-2xl"
-        >Repeat Password</label>
+        >Confirm Password</label>
         <input
           id="password_confirmation"
           type="password"
