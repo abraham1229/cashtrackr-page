@@ -1,10 +1,10 @@
 "use server"
 import { cookies } from 'next/headers'
 import { ErrorResponseSchema, LoginSchema, SucessSchema } from "@/src/schemas"
+import { redirect } from 'next/navigation'
 
 type ActionStateType = {
-  errors: string[],
-  success: string
+  errors: string[]
 }
 
 export async function authenticate(prevState: ActionStateType, formData: FormData) {
@@ -19,8 +19,7 @@ export async function authenticate(prevState: ActionStateType, formData: FormDat
 
   if (!auth.success) {
     return {
-      errors: auth.error.errors.map(error => error.message),
-      success: ''
+      errors: auth.error.errors.map(error => error.message)
     }
   }
 
@@ -44,23 +43,17 @@ export async function authenticate(prevState: ActionStateType, formData: FormDat
     const { error } = ErrorResponseSchema.parse(json)
 
     return {
-      errors: [error],
-      success: ''
+      errors: [error]
     }
   }
-
-  const sucess = SucessSchema.parse(json)
 
   // Set cookies
   cookies().set({
     name: 'CASHTRACKR_token',
-    value: sucess,
+    value: json,
     httpOnly: true,
     path: '/'
   })
 
-  return {
-    errors: [],
-    success: sucess
-  }
+  redirect('/admin')
 }

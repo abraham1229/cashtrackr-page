@@ -7,8 +7,7 @@ import { toast } from "react-toastify"
 export default function LoginForm() {
 
   const [state, dispatch] = useFormState(authenticate, {
-    errors: [],
-    success: ''
+    errors: []
   })
 
   useEffect(() => {
