@@ -1,10 +1,30 @@
+import { resetPassword } from "@/actions/reset-password.action"
+import { useEffect } from "react"
+import { useFormState } from "react-dom"
+import { toast } from "react-toastify"
 
-export default function ResetPasswordForm() {
-  
+export default function ResetPasswordForm({ token }: { token: string }) {
+  const [state, dispatch] = useFormState(resetPassword, {
+    errors: [],
+    success: ''
+  })
+
+  useEffect(() => {
+    if (state.errors) {
+      state.errors.forEach(error => {
+        toast.error(error)
+      })
+    }
+    if (state.success) {
+      toast.success(state.success)
+    }
+  }, [state])
+
   return (
     <form
       className=" mt-14 space-y-5"
       noValidate
+      action={dispatch}
     >
       <div className="flex flex-col gap-5">
         <label
@@ -36,7 +56,7 @@ export default function ResetPasswordForm() {
 
       <input
         type="submit"
-        value='Guardar Password'
+        value='Save Password'
         className="bg-purple-950 hover:bg-purple-800 w-full p-3 rounded-lg text-white font-black  text-xl cursor-pointer block"
       />
     </form>
