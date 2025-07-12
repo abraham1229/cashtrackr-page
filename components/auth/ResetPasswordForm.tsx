@@ -4,7 +4,8 @@ import { useFormState } from "react-dom"
 import { toast } from "react-toastify"
 
 export default function ResetPasswordForm({ token }: { token: string }) {
-  const [state, dispatch] = useFormState(resetPassword, {
+  const resetPasswordWithToken = resetPassword.bind(null,token)
+  const [state, dispatch] = useFormState(resetPasswordWithToken, {
     errors: [],
     success: ''
   })
