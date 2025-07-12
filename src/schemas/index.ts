@@ -25,6 +25,12 @@ export const LoginSchema = z.object({
     .min(1, { message: 'Password is required' })
 })
 
+export const ForgotPasswordSchema = z.object({
+  email: z.string()
+    .min(1, { message: 'Email is required' })
+    .email({ message: 'Invalid email' }),
+})
+
 export const SucessSchema = z.string()
 
 export const ErrorResponseSchema = z.object({
