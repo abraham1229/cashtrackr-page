@@ -40,11 +40,19 @@ export const ResetPasswordSchema = z.object({
   path: ["password_confirmation"]
 });
 
-export const SucessSchema = z.string()
+export const DraftBudgetSchema = z.object({
+  name: z.string()
+    .min(1, { message: 'Budget name is required' }),
+  amount: z.coerce.
+    number({ message: 'Invalid amount' })
+    .min(1, { message: 'Invalid amount' }),
+})
 
 export const ErrorResponseSchema = z.object({
   error: z.string()
 })
+
+export const SucessSchema = z.string()
 
 export const UserSchema = z.object({
   id: z.number(),
