@@ -80,17 +80,15 @@ export default async function AdminPage() {
           ))}
         </ul>
       ) : (
-        <>
-          <p className="text-center py-20" >
-            No budgets yet {''}
-          </p>
+        <p className="text-center py-20" >
+          No budgets yet {''}
           <Link
             href={'/admin/budgets/new'}
             className="text-purple-950 font-bold"
           >
             start by creating one
           </Link>
-        </>
+        </p>
       )}
     </>
   )
