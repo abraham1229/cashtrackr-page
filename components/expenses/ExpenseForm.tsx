@@ -1,5 +1,10 @@
+import { DrafExpense } from "@/src/schemas"
 
-export default function ExpenseForm() {
+type ExpenseFormProps = {
+  expense?: DrafExpense
+}
+
+export default function ExpenseForm({ expense }: ExpenseFormProps) {
   return (
     <>
       <div className="mb-5">
@@ -12,6 +17,7 @@ export default function ExpenseForm() {
           type="text"
           placeholder="mouse"
           name="name"
+          defaultValue={expense?.name}
         />
       </div>
 
@@ -25,6 +31,7 @@ export default function ExpenseForm() {
           type="number"
           placeholder="$100"
           name="amount"
+          defaultValue={expense?.amount}
         />
       </div>
     </>

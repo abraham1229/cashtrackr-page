@@ -21,9 +21,11 @@ export default function ModalContainer() {
   const show = showModal ? true : false
 
   const addExpense = searchParams.get('addExpense')
+  const editExpense = searchParams.get('editExpenseId')
 
   const getComponentName = () => {
-    if(addExpense) return 'AddExpense'
+    if (addExpense) return 'AddExpense'
+    if (editExpense) return 'EditExpense'
   }
 
   const componentName = getComponentName()
@@ -31,7 +33,6 @@ export default function ModalContainer() {
 
   const closeModal = () => {
     const hideModal = new URLSearchParams(searchParams.toString())
-    console.log(hideModal)
     Array.from(hideModal.entries()).forEach(([key]) => {
       hideModal.delete(key)
     });
