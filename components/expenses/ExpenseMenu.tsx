@@ -42,7 +42,7 @@ export default function ExpenseMenu({ expenseId }: { expenseId: Expense['id'] })
                 className='block px-3 py-1 text-sm leading-6 text-red-500'
                 onClick={() => router.push(location.pathname + `?showModal=true&deleteExpenseId=${expenseId}`)}
               >
-                Delte Expense
+                Delete Expense
               </button>
             </MenuItem>
           </MenuItems>
