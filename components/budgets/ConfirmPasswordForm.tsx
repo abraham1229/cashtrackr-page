@@ -40,7 +40,7 @@ export default function ConfirmPasswordForm() {
       >
         Delete Budget
       </DialogTitle>
-      {state.errors && state.errors.map(error => (<ErrorMessage>{error}</ErrorMessage>))}
+      {state.errors && state.errors.map(error => (<ErrorMessage key={error}>{error}</ErrorMessage>))}
       <p className="text-xl font-bold">Enter your password to {''}
         <span className="text-amber-500"> delete the budget {''}</span>
       </p>
