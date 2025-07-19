@@ -4,8 +4,10 @@ import createExpense from "@/actions/create-expense-action";
 import { useFormState } from "react-dom";
 import { useParams } from "next/navigation";
 import ErrorMessage from "../ui/ErrorMessage";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
-export default function AddExpenseForm() {
+export default function AddExpenseForm({ closeModal }: { closeModal: () => void }) {
   const { id } = useParams()
 
   const createExpenseWithBudgetId = createExpense.bind(null, +id)
@@ -13,6 +15,13 @@ export default function AddExpenseForm() {
     errors: [],
     success: ''
   })
+
+  useEffect(() => {
+    if (state.success) {
+      toast.success(state.success)
+      closeModal()
+    }
+  }, [state])
 
   return (
     <>
