@@ -21,7 +21,6 @@ export default function ChangePasswordForm() {
     if (state.success) {
       toast.success(state.success)
       ref.current?.reset()
-      route.push('/login')
     }
   }, [state])
 
