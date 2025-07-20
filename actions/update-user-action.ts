@@ -2,6 +2,7 @@
 
 import getToken from "@/src/auth/token"
 import { ErrorResponseSchema, SucessSchema, UpdateUserSchema } from "@/src/schemas"
+import { revalidatePath } from "next/cache"
 
 type ActionStateType = {
   errors: string[],
@@ -46,6 +47,7 @@ export default async function updateUser(prevState: ActionStateType, formData: F
   }
 
   const success = SucessSchema.parse(json)
+  revalidatePath('/admin')
 
   return {
     errors: [],
