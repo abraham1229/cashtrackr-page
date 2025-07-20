@@ -5,12 +5,10 @@ import { useFormState } from "react-dom"
 import ErrorMessage from "../ui/ErrorMessage"
 import { useEffect, useRef } from "react"
 import { toast } from "react-toastify"
-import { useRouter } from "next/navigation"
 
 export default function ChangePasswordForm() {
 
   const ref = useRef<HTMLFormElement>(null)
-  const route = useRouter()
 
   const [state, dispatch] = useFormState(updatePassword, {
     errors: [],

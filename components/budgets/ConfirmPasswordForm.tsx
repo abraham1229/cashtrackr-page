@@ -5,7 +5,6 @@ import { deleteBudget } from "@/actions/delete-budget-action"
 import { useEffect } from "react"
 import { toast } from "react-toastify"
 import ErrorMessage from "../ui/ErrorMessage"
-import { error } from "console"
 
 export default function ConfirmPasswordForm() {
   const pathname = usePathname()

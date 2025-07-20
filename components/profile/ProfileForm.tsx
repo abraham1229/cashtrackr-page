@@ -19,7 +19,7 @@ export default function ProfileForm({ user }: { user: User }) {
       toast.success(state.success)
       route.push('/admin')
     }
-  }, [state])
+  }, [state, route])
 
   return (
     <>
