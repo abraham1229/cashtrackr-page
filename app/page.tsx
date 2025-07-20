@@ -53,7 +53,7 @@ export default function Home() {
         <Link
           href="/auth/register"
           className="text-gray-500 text-sm uppercase text-center"
-        >Don’t have an account? Create one</Link>
+        >{"Don't"} have an account? Create one</Link>
         <Link
           href="/auth/login"
           className="text-gray-500 text-sm uppercase text-center"
