@@ -65,6 +65,14 @@ export const UpdatePasswordSchema = z.object({
   path: ["password_confirmation"]
 });
 
+export const UpdateUserSchema = z.object({
+  name: z.string()
+    .min(1, { message: "Name is required" }),
+  email: z.string()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Invalid email" }),
+})
+
 export const ErrorResponseSchema = z.object({
   error: z.string()
 })
