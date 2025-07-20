@@ -5,8 +5,9 @@ import ErrorMessage from "../ui/ErrorMessage"
 import { useEffect } from "react"
 import { toast } from "react-toastify"
 import { useRouter } from "next/navigation"
+import { User } from "@/src/schemas"
 
-export default function ProfileForm() {
+export default function ProfileForm({ user }: { user: User }) {
   const route = useRouter()
   const [state, dispatch] = useFormState(updateUser, {
     errors: [],
@@ -37,6 +38,7 @@ export default function ProfileForm() {
             placeholder="Abraham Ortiz"
             className="w-full border border-gray-300 p-3 rounded-lg"
             name="name"
+            defaultValue={user.name}
           />
         </div>
         <div className="flex flex-col gap-5">
@@ -50,6 +52,7 @@ export default function ProfileForm() {
             placeholder="email@email.com"
             className="w-full border border-gray-300 p-3 rounded-lg"
             name="email"
+            defaultValue={user.email}
           />
         </div>
 
