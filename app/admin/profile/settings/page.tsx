@@ -1,3 +1,4 @@
+import ProfileForm from "@/components/profile/ProfileForm";
 
 export default async function EditProfilePage() {
   return (
@@ -6,6 +7,7 @@ export default async function EditProfilePage() {
       <p className="text-xl font-bold">Here you can update your {''}
         <span className="text-amber-500">profile info</span>
       </p>
+      <ProfileForm />
     </>
   )
 }
