@@ -55,6 +55,16 @@ export const DraftExpenseSchema = z.object({
   amount: z.coerce.number().min(1, { message: 'Invalid amount' })
 })
 
+export const UpdatePasswordSchema = z.object({
+  current_password: z.string().min(1, { message: 'Password is required' }),
+  password: z.string()
+    .min(8, { message: 'New password must be at least 8 characters' }),
+  password_confirmation: z.string()
+}).refine((data) => data.password === data.password_confirmation, {
+  message: "Passwords don't match",
+  path: ["password_confirmation"]
+});
+
 export const ErrorResponseSchema = z.object({
   error: z.string()
 })

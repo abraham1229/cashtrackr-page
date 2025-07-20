@@ -1,3 +1,4 @@
+import ChangePasswordForm from "@/components/profile/ChangePasswordForm";
 
 export default async function ChangePasswordPage() {
   return (
@@ -6,6 +7,8 @@ export default async function ChangePasswordPage() {
       <p className="text-xl font-bold">Here you can change your {''}
         <span className="text-amber-500">password</span>
       </p>
+
+      <ChangePasswordForm />
     </>
   )
 }
