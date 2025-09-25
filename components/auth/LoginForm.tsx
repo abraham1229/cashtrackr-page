@@ -1,12 +1,13 @@
 'use client'
 import { authenticate } from "@/actions/authenticate-user-action"
-import { useEffect } from "react"
+import { useEffect, useTransition } from "react"
 import { useFormState } from "react-dom"
 import { toast } from "react-toastify"
 import { useLoading } from "@/src/contexts/LoadingContext"
 
 export default function LoginForm() {
   const { startLoading, stopLoading } = useLoading()
+  const [isPending, startTransition] = useTransition()
   const [state, dispatch] = useFormState(authenticate, {
     errors: []
   })
@@ -16,14 +17,21 @@ export default function LoginForm() {
       state.errors.forEach(error => {
         toast.error(error)
       })
-      stopLoading()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
 
+  useEffect(() => {
+    if (isPending) {
+      startLoading()
+    } else {
+      stopLoading()
+    }
+  }, [isPending, startLoading, stopLoading])
+
   const handleSubmit = (formData: FormData) => {
-    startLoading()
-    dispatch(formData)
+    startTransition(() => {
+      dispatch(formData)
+    })
   }
 
   return (
