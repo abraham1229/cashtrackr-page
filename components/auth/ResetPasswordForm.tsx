@@ -3,9 +3,11 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useFormState } from "react-dom"
 import { toast } from "react-toastify"
+import { useLoading } from "@/src/contexts/LoadingContext"
 
 export default function ResetPasswordForm({ token }: { token: string }) {
   const router = useRouter()
+  const { startLoading, stopLoading } = useLoading()
   const resetPasswordWithToken = resetPassword.bind(null,token)
   const [state, dispatch] = useFormState(resetPasswordWithToken, {
     errors: [],
@@ -17,18 +19,26 @@ export default function ResetPasswordForm({ token }: { token: string }) {
       state.errors.forEach(error => {
         toast.error(error)
       })
+      stopLoading()
     }
     if (state.success) {
       toast.success(state.success)
+      stopLoading()
       router.push('/auth/login')
     }
-  }, [state, router])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state])
+
+  const handleSubmit = (formData: FormData) => {
+    startLoading()
+    dispatch(formData)
+  }
 
   return (
     <form
       className=" mt-14 space-y-5"
       noValidate
-      action={dispatch}
+      action={handleSubmit}
     >
       <div className="flex flex-col gap-5">
         <label

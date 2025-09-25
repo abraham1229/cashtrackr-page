@@ -3,9 +3,10 @@ import { authenticate } from "@/actions/authenticate-user-action"
 import { useEffect } from "react"
 import { useFormState } from "react-dom"
 import { toast } from "react-toastify"
+import { useLoading } from "@/src/contexts/LoadingContext"
 
 export default function LoginForm() {
-
+  const { startLoading, stopLoading } = useLoading()
   const [state, dispatch] = useFormState(authenticate, {
     errors: []
   })
@@ -15,15 +16,22 @@ export default function LoginForm() {
       state.errors.forEach(error => {
         toast.error(error)
       })
+      stopLoading()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
+
+  const handleSubmit = (formData: FormData) => {
+    startLoading()
+    dispatch(formData)
+  }
 
   return (
     <>
       <form
         className="mt-14 space-y-5"
         noValidate
-        action={dispatch}
+        action={handleSubmit}
       >
         <div className="flex flex-col gap-2">
           <label

@@ -4,9 +4,11 @@ import { useEffect, useRef } from "react"
 import { useFormState } from "react-dom"
 import ErrorMessage from "../ui/ErrorMessage"
 import SuccessMessage from "../ui/SuccessMessage"
+import { useLoading } from "@/src/contexts/LoadingContext"
 
 export default function RegisterForm() {
   const ref = useRef<HTMLFormElement>(null)
+  const { startLoading, stopLoading } = useLoading()
   const [state, dispatch] = useFormState(register, {
     errors: [],
     success: ''
@@ -15,15 +17,25 @@ export default function RegisterForm() {
   useEffect(() => {
     if (state.success) {
       ref.current?.reset()
+      stopLoading()
     }
+    if (state.errors.length > 0) {
+      stopLoading()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
+
+  const handleSubmit = (formData: FormData) => {
+    startLoading()
+    dispatch(formData)
+  }
 
   return (
     <form
       ref={ref}
       className="mt-14 space-y-5"
       noValidate
-      action={dispatch}
+      action={handleSubmit}
     >
       {state.errors.map(error => <ErrorMessage key={error}>{error}</ErrorMessage>)}
       {state.success && <SuccessMessage>{ state.success }</SuccessMessage>}

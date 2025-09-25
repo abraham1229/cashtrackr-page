@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Outfit } from 'next/font/google'
+import { LoadingProvider } from '@/src/contexts/LoadingContext'
+import LoadingOverlay from '@/components/ui/LoadingOverlay'
 
 const outfit = Outfit({ subsets: ['latin'] })
 
@@ -37,9 +39,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={outfit.className}>
-        {children}
+      <body className={outfit.className}>
+        <LoadingProvider>
+          {children}
+          <LoadingOverlay />
+        </LoadingProvider>
       </body>
     </html>
   );

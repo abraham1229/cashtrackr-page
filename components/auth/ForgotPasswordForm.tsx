@@ -4,8 +4,10 @@ import { forgotPassword } from "@/actions/forgot-password.action"
 import { useEffect } from "react"
 import { useFormState } from "react-dom"
 import { toast } from "react-toastify"
+import { useLoading } from "@/src/contexts/LoadingContext"
 
 export default function ForgotPasswordForm() {
+  const { startLoading, stopLoading } = useLoading()
   const [state, dispatch] = useFormState(forgotPassword, {
     errors: [],
     success: ''
@@ -14,17 +16,25 @@ export default function ForgotPasswordForm() {
   useEffect(() => {
     if (state.errors) {
       toast.error(state.errors[0])
+      stopLoading()
     }
     if (state.success) {
       toast.success(state.success)
+      stopLoading()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
+
+  const handleSubmit = (formData: FormData) => {
+    startLoading()
+    dispatch(formData)
+  }
 
   return (
     <form
       className=" mt-14 space-y-5"
       noValidate
-      action={dispatch}
+      action={handleSubmit}
     >
       <div className="flex flex-col gap-2 mb-10">
         <label
