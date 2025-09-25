@@ -1,6 +1,6 @@
 'use client'
 import { register } from "@/actions/create-account-action"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useTransition } from "react"
 import { useFormState } from "react-dom"
 import ErrorMessage from "../ui/ErrorMessage"
 import SuccessMessage from "../ui/SuccessMessage"
@@ -9,6 +9,7 @@ import { useLoading } from "@/src/contexts/LoadingContext"
 export default function RegisterForm() {
   const ref = useRef<HTMLFormElement>(null)
   const { startLoading, stopLoading } = useLoading()
+  const [isPending, startTransition] = useTransition()
   const [state, dispatch] = useFormState(register, {
     errors: [],
     success: ''
@@ -17,17 +18,21 @@ export default function RegisterForm() {
   useEffect(() => {
     if (state.success) {
       ref.current?.reset()
-      stopLoading()
     }
-    if (state.errors.length > 0) {
-      stopLoading()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
 
+  useEffect(() => {
+    if (isPending) {
+      startLoading()
+    } else {
+      stopLoading()
+    }
+  }, [isPending, startLoading, stopLoading])
+
   const handleSubmit = (formData: FormData) => {
-    startLoading()
-    dispatch(formData)
+    startTransition(() => {
+      dispatch(formData)
+    })
   }
 
   return (

@@ -1,13 +1,14 @@
 'use client'
 
 import { forgotPassword } from "@/actions/forgot-password.action"
-import { useEffect } from "react"
+import { useEffect, useTransition } from "react"
 import { useFormState } from "react-dom"
 import { toast } from "react-toastify"
 import { useLoading } from "@/src/contexts/LoadingContext"
 
 export default function ForgotPasswordForm() {
   const { startLoading, stopLoading } = useLoading()
+  const [isPending, startTransition] = useTransition()
   const [state, dispatch] = useFormState(forgotPassword, {
     errors: [],
     success: ''
@@ -16,18 +17,24 @@ export default function ForgotPasswordForm() {
   useEffect(() => {
     if (state.errors) {
       toast.error(state.errors[0])
-      stopLoading()
     }
     if (state.success) {
       toast.success(state.success)
-      stopLoading()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
 
+  useEffect(() => {
+    if (isPending) {
+      startLoading()
+    } else {
+      stopLoading()
+    }
+  }, [isPending, startLoading, stopLoading])
+
   const handleSubmit = (formData: FormData) => {
-    startLoading()
-    dispatch(formData)
+    startTransition(() => {
+      dispatch(formData)
+    })
   }
 
   return (

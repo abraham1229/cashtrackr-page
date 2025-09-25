@@ -1,6 +1,6 @@
 import { resetPassword } from "@/actions/reset-password.action"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useTransition } from "react"
 import { useFormState } from "react-dom"
 import { toast } from "react-toastify"
 import { useLoading } from "@/src/contexts/LoadingContext"
@@ -8,6 +8,7 @@ import { useLoading } from "@/src/contexts/LoadingContext"
 export default function ResetPasswordForm({ token }: { token: string }) {
   const router = useRouter()
   const { startLoading, stopLoading } = useLoading()
+  const [isPending, startTransition] = useTransition()
   const resetPasswordWithToken = resetPassword.bind(null,token)
   const [state, dispatch] = useFormState(resetPasswordWithToken, {
     errors: [],
@@ -19,19 +20,25 @@ export default function ResetPasswordForm({ token }: { token: string }) {
       state.errors.forEach(error => {
         toast.error(error)
       })
-      stopLoading()
     }
     if (state.success) {
       toast.success(state.success)
-      stopLoading()
       router.push('/auth/login')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state])
+  }, [state, router])
+
+  useEffect(() => {
+    if (isPending) {
+      startLoading()
+    } else {
+      stopLoading()
+    }
+  }, [isPending, startLoading, stopLoading])
 
   const handleSubmit = (formData: FormData) => {
-    startLoading()
-    dispatch(formData)
+    startTransition(() => {
+      dispatch(formData)
+    })
   }
 
   return (
